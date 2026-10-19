@@ -1,0 +1,7 @@
+{
+  "schema": 1,
+  "mode": "read_only",
+  "allowed_reads": ["atlas_calendar_read", "atlas_mail_read"],
+  "upstream_commit": "d923a5eb487a17c0a68801bba9ef0f56c81040a8",
+  "deployment": "development-bootstrap"
+}

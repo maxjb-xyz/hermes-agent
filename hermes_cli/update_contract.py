@@ -85,6 +85,14 @@ def evaluate_update_admission(project_root: Path) -> Optional[UpdateRefusal]:
     ``None`` means the install is eligible for in-place update (git checkout or unknown-but-
     mutable). Never raises; on any internal error it falls back to the heuristic layer only.
     """
+    from agent.managed_runtime import read_manifest
+
+    try:
+        manifest = read_manifest(project_root)
+    except PermissionError:
+        return UpdateRefusal("managed-runtime-invalid", "Managed runtime metadata is invalid; contact its controller.", "")
+    if manifest is not None:
+        return UpdateRefusal("managed-runtime", "Updates are integrated and deployed by the independent controller.", "")
     if is_commit_build(project_root):
         return UpdateRefusal("commit-build", COMMIT_BUILD_UPDATE_MESSAGE, "")
 
